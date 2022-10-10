@@ -1,9 +1,11 @@
 <launch>
+
   <param name="/use_sim_time" value="true" />
 
   <!-- start world -->
   <include file="$(find multirobot_merge)/launch/square.launch"/>    
   
   <!-- include our robots -->
-  <!-- <include file="$(find multirobot_merge)/launch/one_robot.launch"/> -->
+  <include file="$(find multirobot_merge)/launch/one_robot.launch"/>
+
 </launch>
