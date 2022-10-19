@@ -11,15 +11,15 @@
     </include>
   </group>
 
-  <!-- ROBOT 2 ->
+  <!-- ROBOT 2 -->
   <group ns="robot2">
     <param name="tf_prefix" value="robot2" />
     <include file="$(find multirobot_merge)/launch/one_robot.launch" >
-      <arg name = "pose_x" value = "3" />
+      <arg name = "pose_x" value = "6" />
       <arg name = "pose_y" value = "-3" />
       <arg name = "pose_z" value = "0" />
       <arg name = "robot_name"  value = "robot2" />
     </include>
-  </group> -->
+  </group>
     
 </launch>

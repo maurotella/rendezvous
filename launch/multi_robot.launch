@@ -8,17 +8,26 @@
   <!-- include robots -->
   <include file="$(find multirobot_merge)/launch/robots.launch" />
 
-  <!-- multi map merge ->
+  <!-- multi map merge -->
   <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
-    <param name="robot_map_topic" value="map"/>
-    <param name="robot_namespace" value="robot"/>
-    <param name="merged_map_topic" value="map"/>
-    <param name="world_frame" value="map"/>
-    <param name="known_init_poses" value="true"/>
-    <param name="merging_rate" value="0.5"/>
-    <param name="discovery_rate" value="0.05"/>
-    <param name="estimation_rate" value="0.1"/>
-    <param name="estimation_confidence" value="1.0"/>
-  </node> -->
+    <param name = "robot_map_topic" value="map"/>
+    <param name = "robot_namespace" value="robot"/>
+    <param name = "merged_map_topic" value="mapM"/>
+    <param name = "world_frame" value="mapM"/>
+    <param name = "known_init_poses" value="false"/>
+    <param name = "merging_rate" value="4"/>
+    <param name = "discovery_rate" value="0.05"/>
+    <param name = "estimation_rate" value="0.4"/>
+    <param name = "estimation_confidence" value="1.0"/>
+  </node>
+
+  <!-- RVIZ -->
+  <node 
+    pkg      = "rviz" 
+    type     = "rviz" 
+    name     = "rviz" 
+    required = "true"
+    args     = "-d $(find multirobot_merge)/two_robot.rviz"
+  />
 
 </launch>
