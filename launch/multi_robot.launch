@@ -3,12 +3,12 @@
   <param name="/use_sim_time" value="true" />
 
   <!-- start world -->
-  <include file="$(find multirobot_merge)/launch/square.launch" />  
+  <include file="$(find multirobot_merge)/launch/world.launch" />  
 
   <!-- include robots -->
   <include file="$(find multirobot_merge)/launch/robots.launch" />
 
-  <!-- multi map merge -->
+  <!-- multi map merge ->
   <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
     <param name="robot_map_topic" value="map"/>
     <param name="robot_namespace" value="robot"/>
@@ -19,6 +19,6 @@
     <param name="discovery_rate" value="0.05"/>
     <param name="estimation_rate" value="0.1"/>
     <param name="estimation_confidence" value="1.0"/>
-  </node>
+  </node> -->
 
 </launch>

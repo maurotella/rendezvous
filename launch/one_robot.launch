@@ -1,12 +1,12 @@
 <launch>
 
     <arg name = "model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
-    <arg name = "robot_name" default="" />
-    <arg name = "pose_x"     default="0" />
-    <arg name = "pose_y"     default="0" />
-    <arg name = "pose_z"     default="0" />
-    <arg name = "open_rviz"   default="true" />
-    <arg name = "slam_methods"   default="gmapping" />
+    <arg name = "robot_name"   default="" />
+    <arg name = "pose_x"       default="0" />
+    <arg name = "pose_y"       default="0" />
+    <arg name = "pose_z"       default="0" />
+    <arg name = "open_rviz"    default="true" />
+    <arg name = "slam_methods" default="gmapping" />
 
     <!-- TurtleBot -->
     <param name="robot_description" command="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro'"/>
@@ -16,8 +16,17 @@
         type = "spawn_model"
         args = "-urdf -model turtlebot3_$(arg robot_name) -param robot_description -x $(arg pose_x) -y $(arg pose_y) -z $(arg pose_z)" 
     />
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node 
+        name   = "robot_state_publisher" 
+        pkg    = "robot_state_publisher" 
+        type   = "robot_state_publisher" 
+        output = "screen"
+    />
+    <node 
+        name = "joint_state_publisher" 
+        pkg  = "joint_state_publisher" 
+        type = "joint_state_publisher"
+    />
 
     <!-- SLAM -->
     <include file="$(find multirobot_merge)/launch/gmapping.launch">
@@ -25,14 +34,18 @@
         <arg name="multi_robot_name" value="$(arg robot_name)"/>
     </include>
 
-    <!-- Map merging -->
+    <!-- Map merging ->
     <group ns="map_merge">
         <param name="init_pose_x"   value="$(arg pose_x)"/>
         <param name="init_pose_y"   value="$(arg pose_y)"/>
         <param name="init_pose_z"   value="$(arg pose_z)"/>
         <param name="init_pose_yaw" value="0"  />
-    </group>
-    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg robot_name)_tf_broadcaster"  args="0 0 0 0 0 0 /map /map 100"/>
-
+    </group> ->
+    <node 
+        pkg  = "tf" 
+        type = "static_transform_publisher" 
+        name = "world_to_$(arg robot_name)_tf_broadcaster"  
+        args = "0 0 0 0 0 0 /map /$(arg robot_name)/map 100"
+    /> -->
 
 </launch>
