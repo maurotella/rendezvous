@@ -1,10 +1,10 @@
 <launch>
   <!-- Arguments -->
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
-  <arg name="multi_robot_name" default=""/>
-  <arg name="set_base_frame" default="$(arg multi_robot_name)/base_footprint"/>
-  <arg name="set_odom_frame" default="$(arg multi_robot_name)/odom"/>
-  <arg name="set_map_frame"  default="mapM"/>
+  <arg name = "model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name = "multi_robot_name" default=""/>
+  <arg name = "set_base_frame" default="$(arg multi_robot_name)/base_footprint"/>
+  <arg name = "set_odom_frame" default="$(arg multi_robot_name)/odom"/>
+  <arg name = "set_map_frame"  default="map"/>
 
   <!-- Gmapping -->
   <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping">

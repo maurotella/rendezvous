@@ -7,6 +7,7 @@
     <arg name = "pose_z"       default="0" />
     <arg name = "open_rviz"    default="true" />
     <arg name = "slam_methods" default="gmapping" />
+    <arg name = "move_forward_only" default="false"/>
 
     <!-- TurtleBot -->
     <param name="robot_description" command="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro'"/>
@@ -32,6 +33,9 @@
     <include file = "$(find multirobot_merge)/launch/$(arg slam_methods).launch">
         <arg name = "model" value="$(arg model)"/>
         <arg name = "multi_robot_name" value="$(arg robot_name)"/>
+        <arg name = "set_map_frame"  value="/$(arg robot_name)/map"/>
+        <arg name = "set_base_frame" default="/$(arg robot_name)/base_footprint"/>
+        <arg name = "set_odom_frame" default="/$(arg robot_name)/odom"/>
     </include>
 
     <!-- Map merging -->
@@ -45,12 +49,34 @@
         pkg  = "tf" 
         type = "static_transform_publisher" 
         name = "world_to_$(arg robot_name)_tf_broadcaster"  
-        args = "0 0 0 0 0 0 /mapM /$(arg robot_name)/mapM 300"
+        args = "0 0 0 0 0 0 /map /$(arg robot_name)/map 100"
     />
 
     <!-- exploration -->
-    <include file="$(find multirobot_merge)/launch/exploration.launch">
-        <arg name="robot_name" value="$(arg robot_name)"/>
-    </include>
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load" />
+        <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params_$(arg model).yaml" command="load" />
+        <param name="global_costmap/robot_base_frame" value="$(arg robot_name)/base_footprint"/>
+        <param name="local_costmap/robot_base_frame" value="$(arg robot_name)/base_footprint"/>
+        <param name="local_costmap/global_frame" value="$(arg robot_name)/odom"/>
+    </node>
+    <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="base_link"/>
+        <param name="costmap_topic" value="/map"/>
+        <param name="costmap_updates_topic" value="map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+    </node>
 
 </launch>
