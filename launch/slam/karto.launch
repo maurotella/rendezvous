@@ -6,7 +6,7 @@
   <arg name="set_map_frame"  default="map"/>
   <arg name="multi_robot_name" default=""/>
 
-  <!-- Gmapping -->
+  <!-- Karto -->
   <node pkg="slam_karto" type="slam_karto" name="turtlebot3_slam_karto" output="screen">
     <param name="odom_frame" value="$(arg set_odom_frame)"/>
     <param name="base_frame" value="$(arg set_base_frame)"/>

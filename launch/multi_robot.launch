@@ -16,9 +16,9 @@
     <param name = "world_frame"           value = "map"/>
     <param name = "known_init_poses"      value = "false"/>
     <param name = "merging_rate"          value = "4"/>
-    <param name = "discovery_rate"        value = "0.1"/>
-    <param name = "estimation_rate"       value = "0.4"/>
-    <param name = "estimation_confidence" value = "1"/>
+    <param name = "discovery_rate"        value = "2"/>
+    <param name = "estimation_rate"       value = "0.5"/>
+    <param name = "estimation_confidence" value = "0.7"/>
   </node> -->
 
   <!-- RVIZ -->

@@ -39,7 +39,7 @@
     </include>
 
     <!-- Map merging -->
-    <group ns="map_merge">
+    <group ns = "map_merge">
         <param name = "init_pose_x"   value = "$(arg pose_x)"/>
         <param name = "init_pose_y"   value = "$(arg pose_y)"/>
         <param name = "init_pose_z"   value = "$(arg pose_z)"/>

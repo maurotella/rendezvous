@@ -5,25 +5,20 @@
     
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load" />
-        <rosparam file = "$(find turtlebot3_navigation)/param/dwa_local_planner_params_$(arg model).yaml" command="load" />
+        <param name="base_global_planner" value="global_planner/GlobalPlanner" /> 
+        <rosparam file = "$(find multirobot_merge)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file = "$(find multirobot_merge)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file = "$(find multirobot_merge)/param/local_costmap_params.yaml" command="load" />
+        <rosparam file = "$(find multirobot_merge)/param/global_costmap_params.yaml" command="load" />
+        <rosparam file = "$(find multirobot_merge)/param/move_base_params.yaml" command="load" />
+        <!-- <rosparam file = "$(find multirobot_merge)/param/dwa_local_planner_params.yaml" command="load" /> -->
         <param name = "global_costmap/robot_base_frame" value="$(arg robot_name)/base_footprint"/>
         <param name = "local_costmap/robot_base_frame" value="$(arg robot_name)/base_footprint"/>
         <param name = "global_costmap/global_frame" value="$(arg robot_name)/map"/>
         <param name = "local_costmap/global_frame" value="$(arg robot_name)/odom"/>
         <param name = "local_costmap/scan/sensor_frame"    value="$(arg robot_name)/base_scan"/>
-        <!--
-        <param name = "local_costmap/inflation_radius"     value="0.5"/>
-        <param name = "global_costmap/inflation_radius"    value="0.5"/>
-        <param name = "global_costmap/cost_scaling_factor" value="5"/>
-        <param name = "local_costmap/cost_scaling_factor"  value="5"/>
-        -->
     </node>
-    <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+    <node pkg = "explore_lite" type = "explore" respawn = "false" name = "explore" output = "screen">
         <param name = "robot_base_frame"      value = "base_link"/>
         <param name = "costmap_topic"         value = "map"/>
         <param name = "costmap_updates_topic" value = "map_updates"/>
